@@ -3,20 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>MediPanda Intelligence</title>
+    <title>BioTrend Intelligence</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
     <link rel="stylesheet" href="style.css">
 </head>
 
-<body class="h-[100dvh] flex flex-col overflow-hidden bg-[#09090b] text-white font-sans">
+<body class="h-[100dvh] flex flex-col overflow-hidden bg-[#09090b] text-white font-sans relative selection:bg-emerald-500/30">
+
+    <div id="parallax-bg" class="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+        <div class="parallax-blob absolute -top-20 -left-20 w-[500px] h-[500px] bg-emerald-600/10 rounded-full blur-[100px]" data-speed="0.2"></div>
+        <div class="parallax-blob absolute top-[60%] -right-20 w-[600px] h-[600px] bg-blue-600/10 rounded-full blur-[120px]" data-speed="0.1"></div>
+        <div class="parallax-blob absolute top-[30%] left-[40%] w-[300px] h-[300px] bg-purple-600/10 rounded-full blur-[80px]" data-speed="-0.1"></div>
+    </div>
 
     <div class="absolute top-0 left-0 w-full p-6 z-20 flex justify-between items-center bg-gradient-to-b from-black/80 to-transparent pointer-events-none">
         <div>
-            <h1 class="text-xl font-extrabold tracking-tight text-white pointer-events-auto">MediPanda <span class="text-emerald-500">IQ</span></h1>
+            <h1 class="text-xl font-extrabold tracking-tight text-white pointer-events-auto">BioTrend<span class="text-emerald-500"></span></h1>
             <p class="text-[10px] text-zinc-400 font-medium tracking-wide">FDA DATA INTELLIGENCE</p>
         </div>
         
@@ -26,16 +31,16 @@
         </button>
     </div>
 
-    <div id="dashboard-container" class="flex-1 overflow-y-auto no-scrollbar pt-24 pb-32 px-4 space-y-6">
+    <div id="dashboard-container" class="flex-1 overflow-y-auto no-scrollbar pt-24 pb-32 px-4 space-y-6 relative z-10">
         
-        <div id="search-section" class="sticky top-0 z-30 bg-[#09090b]/90 backdrop-blur-xl py-2 -mx-4 px-4 border-b border-zinc-800/50 transition-all duration-500">
+        <div id="search-section" class="sticky top-0 z-30 bg-[#09090b]/80 backdrop-blur-xl py-2 -mx-4 px-4 border-b border-zinc-800/50 transition-all duration-500">
             <div class="relative group">
                 <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                     <i class="fa-solid fa-magnifying-glass text-zinc-500"></i>
                 </div>
                 <input type="text" id="search-input" 
-                    class="block w-full pl-11 pr-4 py-4 bg-zinc-900 border border-zinc-800 rounded-2xl text-sm text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500 transition-all shadow-lg" 
-                    placeholder="Search any drug or condition..."
+                    class="block w-full pl-11 pr-4 py-4 bg-zinc-900/80 border border-zinc-800 rounded-2xl text-sm text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500 transition-all shadow-lg backdrop-blur-md" 
+                    placeholder="Search 'Fever', 'Tylenol', 'Diabetes'..."
                     onkeypress="if(event.key === 'Enter') startSearch()">
                 <button onclick="startSearch()" class="absolute right-2 top-2 bottom-2 bg-emerald-600 hover:bg-emerald-500 text-white px-4 rounded-xl font-bold text-xs transition active:scale-95">
                     Analyze
@@ -43,23 +48,55 @@
             </div>
         </div>
 
+        <div id="empty-state" class="flex flex-col items-center justify-center py-10 min-h-[50vh]">
+            
+            <div class="relative w-64 h-64 mb-6 animate-float">
+                <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full h-full drop-shadow-2xl">
+                    <path d="M100 30 C 100 30, 60 30, 60 70 C 60 110, 85 130, 85 160 L 85 180" 
+                          stroke="#3f3f46" stroke-width="8" stroke-linecap="round" />
+                    <path d="M100 30 C 100 30, 140 30, 140 70 C 140 110, 115 130, 115 160 L 115 180" 
+                          stroke="#3f3f46" stroke-width="8" stroke-linecap="round" />
+                    
+                    <circle cx="60" cy="70" r="5" fill="#71717a" />
+                    <circle cx="140" cy="70" r="5" fill="#71717a" />
+
+                    <path d="M85 160 Q 100 170 115 160" stroke="#3f3f46" stroke-width="8" stroke-linecap="round" />
+
+                    <path d="M100 165 L 100 190" stroke="#3f3f46" stroke-width="8" stroke-linecap="round" />
+
+                    <circle cx="100" cy="190" r="12" fill="#52525b" stroke="#27272a" stroke-width="4" />
+                    <circle cx="100" cy="190" r="6" fill="#10b981" class="animate-pulse-slow" />
+
+                    <path class="stethoscope-pulse" 
+                          d="M140 70 C 140 110, 115 130, 115 160 Q 100 170 85 160 C 85 130, 60 110, 60 70" 
+                          stroke="#10b981" stroke-width="3" stroke-linecap="round" fill="none" />
+                </svg>
+
+                <div class="absolute inset-0 bg-emerald-500/5 blur-[60px] rounded-full pointer-events-none"></div>
+            </div>
+
+            <h2 class="text-2xl font-bold text-white mb-2 tracking-tight">Ready to Analyze</h2>
+            <p class="text-zinc-500 text-sm text-center max-w-xs leading-relaxed">
+                Take the <strong class="text-emerald-400">Health Survey</strong> or search for a drug to visualize FDA safety data.
+            </p>
+        </div>
+
         <div id="results-area" class="hidden space-y-6 animate-fade-in">
              <div class="flex items-center justify-between">
                 <span id="result-type" class="px-3 py-1 rounded-full bg-zinc-800 text-xs font-bold text-zinc-300 border border-zinc-700 uppercase tracking-wider">--</span>
             </div>
-            <div class="bg-zinc-900 border border-zinc-800 rounded-3xl p-5 shadow-xl">
+            <div class="bg-zinc-900/80 backdrop-blur-md border border-zinc-800 rounded-3xl p-5 shadow-xl">
                 <h3 id="chart-title-1" class="font-bold text-zinc-200 text-sm mb-4">--</h3>
                 <div class="h-56 w-full"><canvas id="primaryChart"></canvas></div>
-                <p id="insight-text" class="mt-4 text-xs text-zinc-400 leading-relaxed p-3 bg-zinc-950 rounded-xl border border-zinc-800"></p>
+                <p id="insight-text" class="mt-4 text-xs text-zinc-400 leading-relaxed p-3 bg-zinc-950/50 rounded-xl border border-zinc-800"></p>
             </div>
-            <div class="bg-zinc-900 border border-zinc-800 rounded-3xl p-5 shadow-xl">
+            <div class="bg-zinc-900/80 backdrop-blur-md border border-zinc-800 rounded-3xl p-5 shadow-xl">
                 <h3 class="font-bold text-zinc-200 text-sm mb-4"><i class="fa-solid fa-chart-line text-blue-500 mr-2"></i> FDA Reporting Trend</h3>
                 <div class="h-40 w-full"><canvas id="trendChart"></canvas></div>
             </div>
         </div>
         
         <div id="personal-report-area" class="hidden space-y-6 animate-fade-in pt-2">
-            
             <div class="bg-gradient-to-br from-zinc-800 to-zinc-900 border border-zinc-700 p-6 rounded-3xl flex justify-between items-center relative overflow-hidden">
                 <div>
                     <p class="text-[10px] text-zinc-400 uppercase font-bold tracking-wider mb-1">Your BMI Score</p>
@@ -73,16 +110,13 @@
                     </div>
                 </div>
             </div>
-
             <div>
                 <h2 class="text-lg font-bold text-white mb-1 flex items-center gap-2">
                     <i class="fa-solid fa-shield-virus text-red-500"></i> Detailed Risk Analysis
                 </h2>
-                <p class="text-[10px] text-zinc-500">Real-time FDA reporting trends for your identified risk factors.</p>
+                <p class="text-[10px] text-zinc-500 mb-4">Calculated based on your inputs. Charts show FDA reporting frequency for these conditions.</p>
+                <div id="risk-charts-container" class="space-y-6"></div>
             </div>
-
-            <div id="risk-charts-container" class="space-y-6"></div>
-
         </div>
 
     </div>
@@ -93,74 +127,25 @@
                 <h2 class="text-xl font-bold text-white">Health Profile</h2>
                 <button onclick="toggleSurvey(false)" class="text-zinc-500 hover:text-white"><i class="fa-solid fa-xmark text-xl"></i></button>
             </div>
-            
             <div class="space-y-4">
                 <div class="grid grid-cols-2 gap-4">
-                    <div>
-                        <label class="text-[10px] font-bold text-zinc-500 uppercase ml-2 mb-1">Height (cm)</label>
-                        <input type="number" id="s-height" class="w-full bg-zinc-800 text-white p-3 rounded-xl border border-zinc-700 focus:border-emerald-500 outline-none font-bold" placeholder="175">
-                    </div>
-                    <div>
-                        <label class="text-[10px] font-bold text-zinc-500 uppercase ml-2 mb-1">Weight (kg)</label>
-                        <input type="number" id="s-weight" class="w-full bg-zinc-800 text-white p-3 rounded-xl border border-zinc-700 focus:border-emerald-500 outline-none font-bold" placeholder="70">
-                    </div>
+                    <div><label class="text-[10px] font-bold text-zinc-500 uppercase ml-2 mb-1">Height (cm)</label><input type="number" id="s-height" class="w-full bg-zinc-800 text-white p-3 rounded-xl border border-zinc-700 focus:border-emerald-500 outline-none font-bold" placeholder="175"></div>
+                    <div><label class="text-[10px] font-bold text-zinc-500 uppercase ml-2 mb-1">Weight (kg)</label><input type="number" id="s-weight" class="w-full bg-zinc-800 text-white p-3 rounded-xl border border-zinc-700 focus:border-emerald-500 outline-none font-bold" placeholder="70"></div>
                 </div>
                 <div class="grid grid-cols-2 gap-4">
-                    <div>
-                        <label class="text-[10px] font-bold text-zinc-500 uppercase ml-2 mb-1">Age</label>
-                        <input type="number" id="s-age" class="w-full bg-zinc-800 text-white p-3 rounded-xl border border-zinc-700 outline-none font-bold" placeholder="30">
-                    </div>
-                    <div>
-                        <label class="text-[10px] font-bold text-zinc-500 uppercase ml-2 mb-1">Blood Group</label>
-                        <select id="s-blood" class="w-full bg-zinc-800 text-white p-3 rounded-xl border border-zinc-700 outline-none font-bold appearance-none">
-                            <option value="unknown">Unknown</option>
-                            <option value="a+">A+</option>
-                            <option value="o+">O+</option>
-                            <option value="b+">B+</option>
-                            <option value="ab+">AB+</option>
-                            <option value="a-">A-</option>
-                            <option value="o-">O-</option>
-                        </select>
-                    </div>
+                    <div><label class="text-[10px] font-bold text-zinc-500 uppercase ml-2 mb-1">Age</label><input type="number" id="s-age" class="w-full bg-zinc-800 text-white p-3 rounded-xl border border-zinc-700 outline-none font-bold" placeholder="30"></div>
+                    <div><label class="text-[10px] font-bold text-zinc-500 uppercase ml-2 mb-1">Blood Group</label><select id="s-blood" class="w-full bg-zinc-800 text-white p-3 rounded-xl border border-zinc-700 outline-none font-bold appearance-none"><option value="unknown">Unknown</option><option value="a+">A+</option><option value="o+">O+</option><option value="b+">B+</option><option value="ab+">AB+</option><option value="a-">A-</option><option value="o-">O-</option></select></div>
                 </div>
                 <div class="pt-2">
                     <label class="text-[10px] font-bold text-zinc-400 uppercase mb-2 block tracking-wider">Lifestyle Factors</label>
                     <div class="space-y-3">
-                        <div class="bg-zinc-800/50 p-3 rounded-xl border border-zinc-700/50 flex justify-between items-center">
-                            <span class="text-sm text-zinc-300">Activity Level</span>
-                            <select id="s-activity" class="bg-zinc-900 text-white text-xs p-2 rounded-lg border border-zinc-700 outline-none">
-                                <option value="sedentary">Sedentary (Low)</option>
-                                <option value="moderate">Moderate</option>
-                                <option value="active">Active (High)</option>
-                            </select>
-                        </div>
-                        <div class="bg-zinc-800/50 p-3 rounded-xl border border-zinc-700/50 flex justify-between items-center">
-                            <span class="text-sm text-zinc-300">Smoker?</span>
-                            <div class="flex gap-2">
-                                <label class="cursor-pointer"><input type="radio" name="smoke" value="no" checked class="accent-emerald-500"> <span class="text-xs ml-1">No</span></label>
-                                <label class="cursor-pointer"><input type="radio" name="smoke" value="yes" class="accent-red-500"> <span class="text-xs ml-1">Yes</span></label>
-                            </div>
-                        </div>
-                        <div class="bg-zinc-800/50 p-3 rounded-xl border border-zinc-700/50 flex justify-between items-center">
-                            <span class="text-sm text-zinc-300">Alcohol?</span>
-                            <select id="s-alcohol" class="bg-zinc-900 text-white text-xs p-2 rounded-lg border border-zinc-700 outline-none">
-                                <option value="none">None</option>
-                                <option value="social">Occasional</option>
-                                <option value="heavy">Frequent</option>
-                            </select>
-                        </div>
-                        <div class="bg-zinc-800/50 p-3 rounded-xl border border-zinc-700/50 flex justify-between items-center">
-                            <span class="text-sm text-zinc-300">Diabetic?</span>
-                            <div class="flex gap-2">
-                                <label class="cursor-pointer"><input type="radio" name="diabetic" value="no" checked class="accent-emerald-500"> <span class="text-xs ml-1">No</span></label>
-                                <label class="cursor-pointer"><input type="radio" name="diabetic" value="yes" class="accent-red-500"> <span class="text-xs ml-1">Yes</span></label>
-                            </div>
-                        </div>
+                        <div class="bg-zinc-800/50 p-3 rounded-xl border border-zinc-700/50 flex justify-between items-center"><span class="text-sm text-zinc-300">Activity Level</span><select id="s-activity" class="bg-zinc-900 text-white text-xs p-2 rounded-lg border border-zinc-700 outline-none"><option value="sedentary">Sedentary (Low)</option><option value="moderate">Moderate</option><option value="active">Active (High)</option></select></div>
+                        <div class="bg-zinc-800/50 p-3 rounded-xl border border-zinc-700/50 flex justify-between items-center"><span class="text-sm text-zinc-300">Smoker?</span><div class="flex gap-2"><label class="cursor-pointer"><input type="radio" name="smoke" value="no" checked class="accent-emerald-500"> <span class="text-xs ml-1">No</span></label><label class="cursor-pointer"><input type="radio" name="smoke" value="yes" class="accent-red-500"> <span class="text-xs ml-1">Yes</span></label></div></div>
+                        <div class="bg-zinc-800/50 p-3 rounded-xl border border-zinc-700/50 flex justify-between items-center"><span class="text-sm text-zinc-300">Alcohol?</span><select id="s-alcohol" class="bg-zinc-900 text-white text-xs p-2 rounded-lg border border-zinc-700 outline-none"><option value="none">None</option><option value="social">Occasional</option><option value="heavy">Frequent</option></select></div>
+                        <div class="bg-zinc-800/50 p-3 rounded-xl border border-zinc-700/50 flex justify-between items-center"><span class="text-sm text-zinc-300">Diabetic?</span><div class="flex gap-2"><label class="cursor-pointer"><input type="radio" name="diabetic" value="no" checked class="accent-emerald-500"> <span class="text-xs ml-1">No</span></label><label class="cursor-pointer"><input type="radio" name="diabetic" value="yes" class="accent-red-500"> <span class="text-xs ml-1">Yes</span></label></div></div>
                     </div>
                 </div>
-                <button onclick="generateHealthReport()" class="w-full bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold py-4 rounded-xl shadow-lg shadow-emerald-900/20 active:scale-95 transition mt-4 flex justify-center gap-2 items-center">
-                    <i class="fa-solid fa-calculator"></i> Calculate Risk Profile
-                </button>
+                <button onclick="generateHealthReport()" class="w-full bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold py-4 rounded-xl shadow-lg shadow-emerald-900/20 active:scale-95 transition mt-4 flex justify-center gap-2 items-center"><i class="fa-solid fa-calculator"></i> Calculate Risk Profile</button>
             </div>
         </div>
     </div>
