@@ -25,7 +25,52 @@ canvas {
     width: 100% !important;
     height: 100% !important;
 }
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');
 
+body { font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; }
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+#survey-modal { transition: opacity 0.3s ease-out; }
+@keyframes fadeInUp { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+.animate-fade-in { animation: fadeInUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+canvas { width: 100% !important; height: 100% !important; }
+input:focus, select:focus { box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.1); }
+
+/* --- NEW ANIMATIONS --- */
+
+/* 1. Floating Animation for Empty State */
+@keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-15px); }
+    100% { transform: translateY(0px); }
+}
+.animate-float {
+    animation: float 6s ease-in-out infinite;
+}
+
+/* 2. Stethoscope Line Pulse */
+.stethoscope-pulse {
+    stroke-dasharray: 100;
+    stroke-dashoffset: 100;
+    animation: dash 3s linear infinite;
+    opacity: 0.8;
+}
+
+@keyframes dash {
+    0% { stroke-dashoffset: 100; opacity: 0; }
+    20% { opacity: 1; }
+    80% { opacity: 1; }
+    100% { stroke-dashoffset: -100; opacity: 0; }
+}
+
+/* 3. Bell Pulse */
+.animate-pulse-slow {
+    animation: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: .5; }
+}
 input:focus, select:focus {
     box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.1); /* Emerald glow */
 }
